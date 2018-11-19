@@ -8,6 +8,7 @@ module.exports = function(gameEngine){
 	l.addThing('floor')
 
 	l.addExit('up','mansion_upstairs')
+	l.addExit('south','courtyard')
 
 	return l
 }
