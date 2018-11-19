@@ -4,7 +4,7 @@ module.exports = function(gameEngine){
 	var t = new Thing({ id: 'floor', gameEngine: gameEngine })
 
 	t.setDescription('The mosaic floor is so broken up that you can\'t make out the image.')
-	t.canBeTaken()
+	t.removeAction('take')
 
 	return t
 }
