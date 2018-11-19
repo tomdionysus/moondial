@@ -14,11 +14,8 @@ class Moondial extends GameEngine {
 
 	start() {
 		console.log('Moondial V1.0')
-		console.log('')
-
 		this.player.setLocation('courtyard')
 		super.start()
-		
 	}
 }
 

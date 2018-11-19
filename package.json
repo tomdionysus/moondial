@@ -12,6 +12,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "justified": "^1.0.1"
+    "async": "^2.6.1",
+    "sprintf": "^0.1.5",
+    "wordwrap": "^1.0.0"
   }
 }
