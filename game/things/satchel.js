@@ -1,4 +1,4 @@
-const Container = require('../../lib/Thing')
+const Container = require('../../lib/Container')
 
 module.exports = function(gameEngine){
 	var t = new Container({ id: 'satchel', gameEngine: gameEngine })
