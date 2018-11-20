@@ -6,7 +6,7 @@ module.exports = function(gameEngine){
 
 	l.setDescription('The ruins of the mansion block out the stars above. A ruined staircase leads up from a cracked and broken mosaic floor. Moss grows on the floor.')
 	l.addThing('floor')
-	l.addThing('spoon')
+	l.addThing('fish')
 
 	l.addExit('up','mansion_upstairs')
 	l.addExit('south','courtyard')
