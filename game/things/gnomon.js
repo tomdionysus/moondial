@@ -7,7 +7,6 @@ module.exports = function(gameEngine){
 	t.hide()
 
 	t.addAfter('take',function(){
-		console.log('X The gnomon is now visible')
 		this.show()
 	})
 
