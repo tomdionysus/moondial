@@ -6,9 +6,5 @@ module.exports = function(gameEngine){
 	t.setDescription('The gnomon is a piece of metal about the length of your hand. It is made from steel with a little rust, and its tip is slightly bent.')
 	t.hide()
 
-	t.addAfter('take',function(){
-		this.show()
-	})
-
 	return t
 }

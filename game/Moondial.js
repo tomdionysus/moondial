@@ -6,8 +6,11 @@ class Moondial extends GameEngine {
 		options = options || {}
 		super(options)
 
+		this.loadCharacters(path.join(__dirname,'characters'))
 		this.loadThings(path.join(__dirname,'things'))
 		this.loadLocations(path.join(__dirname,'locations'))
+		
+		this.bootCharacters()
 		this.bootThings()
 		this.bootLocations()
 	}
