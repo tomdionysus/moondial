@@ -6,9 +6,7 @@ module.exports = function(gameEngine){
 	t.setDescription('A small cooked fish.')
 	t.hide()
 
-	t.addAfter('take',function(){
-		this.show()
-	})
+	t.addAfter('take',function(){ this.show() })
 
 	return t
 }

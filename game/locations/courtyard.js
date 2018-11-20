@@ -9,8 +9,8 @@ module.exports = function(gameEngine){
 	l.addThing('gnomon')
 	l.addCharacter('gallagher')
 
-	l.addExit('north','mansion')
-	l.addExit('south','lawns')
+	l.addDirection('north','mansion')
+	l.addDirection('south','lawns')
 
 	return l
 }

@@ -8,8 +8,8 @@ module.exports = function(gameEngine){
 	l.addThing('floor')
 	l.addThing('fish')
 
-	l.addExit('up','mansion_upstairs')
-	l.addExit('south','courtyard')
+	l.addDirection('up','mansion_upstairs')
+	l.addDirection('south','courtyard')
 
 	return l
 }
