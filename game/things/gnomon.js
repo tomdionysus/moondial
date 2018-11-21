@@ -7,6 +7,7 @@ module.exports = function(gameEngine){
 	t.hide()
 
 	t.addAfter('take',function(){ this.show() })
+	t.addAfter('put',function(){ this.show() })
 
 	return t
 }

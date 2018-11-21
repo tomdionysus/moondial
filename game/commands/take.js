@@ -8,13 +8,22 @@ module.exports = class TakeCommand {
 	}
 
 	execute() {
+		// Do we already have the thing?
+		if(this.actor.containsThing(this.thingId)) {
+			if (this.actor.isPlayer()) {
+				this.gameEngine.writeLine('You already have '+this.thingId)
+			}
+			return
+		}
+
 		// Thing must exist and be in the same location as the actor
-		if(!this.thing || (this.thing.location.id != this.actor.location.id)) {
+		if(!this.thing || !this.thing.location || (this.thing.location.id != this.actor.location.id)) {
 			if (this.actor.isPlayer()) {
 				this.gameEngine.writeLine('You can\'t see '+this.thingId)
 			}
 			return
 		}
+
 
 		// Move the thing
 		this.thing.location.removeThing(this.thing.id)

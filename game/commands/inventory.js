@@ -9,7 +9,8 @@ module.exports = class InventoryCommand {
 	execute() {
 		if(!this.actor.isPlayer()) return
 
-		this.gameEngine.writeLine('inventory: '+this.actor.getVisibleThings().join(', '))
+		this.gameEngine.writeLine('Inventory'.bold)
+		this.gameEngine.writeLine((this.actor.getVisibleThings().join(', ')).italic)
 	}
 
 	static help(gameEngine, actor) {
