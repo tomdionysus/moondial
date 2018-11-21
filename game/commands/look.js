@@ -13,7 +13,7 @@ module.exports = class LookCommand {
 		var j = this.actor.location.getVisibleCharacters()
 		str += '\n\nYou can see: '+p.concat(j).join(', ')
 		str += '\nYou can go: '+this.actor.location.getDirections().join(', ')
-		this.gameEngine.writeLine(str)
+		this.gameEngine.writeLine(str.italic)
 	}
 
 	static help(gameEngine, actor) {

@@ -21,9 +21,32 @@ module.exports = class HelpCommand {
 		}
 
 		// Generic Help.
-		var actions = [].concat(this.gameEngine.getActions(), this.actor.getActions(), this.actor.location.getActions())
+		var str = 'Actions:'.bold+'\n'
+		str += 'game: '+(this.gameEngine.getActions().join(', ')).italic+'\n'
+		str += 'you: '+(this.actor.getActions().join(', ')).italic+'\n'
+		str += 'location: '+(this.actor.location.getActions().join(', ')).italic+'\n'
+
+		// Inventory
+		str += 'Inventory'.bold+'\n'
+		var things = this.actor.getVisibleThings()
+		var st = ''
+		for(var i in things) {
+			var thing = this.gameEngine.getThing(things[i])
+			st += thing.id+': '+(thing.getActions().join(', ')).italic+'\n'
+		}
+		if(st.length>0) str+=st
+
+		// Ground
+		str += 'Ground'.bold+'\n'
+		things = this.actor.location.getVisibleThings()
+		st = ''
+		for(i in things) {
+			thing = this.gameEngine.getThing(things[i])
+			st += thing.id+': '+(thing.getActions().join(', ')).italic+'\n'
+		}
+		if(st.length>0) str+=st
 		
-		this.gameEngine.writeLine('actions: '+actions.join(', '))
+		this.gameEngine.writeLine(str.trim())
 	}
 
 	static help(gameEngine, actor) {

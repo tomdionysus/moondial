@@ -9,9 +9,7 @@ module.exports = class SearchCommand {
 
 	execute() {
 		if(!this.thing || (!this.actor.containsThing(this.thing.id) && this.thing.location.id!=this.actor.location.id)) {
-			if(this.actor.isPlayer()) {
-				this.gameEngine.writeLine('You can\'t see '+this.thingId)
-			}
+			this.gameEngine.narrative('can\'t see '+this.thingId)
 			return
 		}
 
@@ -29,7 +27,7 @@ module.exports = class SearchCommand {
 	}
 
 	static parse(gameEngine, actor, params) {
-		if(params.length>1) return module.exports.help(gameEngine, actor)
+		if(params.length != 1) return module.exports.help(gameEngine, actor)
 
 		var thing = gameEngine.get(params[0])
 

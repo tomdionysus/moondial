@@ -18,11 +18,12 @@ class Moondial extends GameEngine {
 	}
 
 	start() {
-		this.writeLine('-------------------')
-		this.writeLine('Welcome to Moondial')
-		this.writeLine('-------------------')
+		this.writeLine('---------------------------------')
+		this.writeLine('            Moondial')
+		this.writeLine('---------------------------------')
 		this.writeLine()
-		this.writeLine('Written By Tom Cully')
+		this.writeLine('Written By Tom Cully & Niki Steel')
+		this.writeLine()
 
 		this.player.setLocation('courtyard')
 		this.player.addThing('satchel')

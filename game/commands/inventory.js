@@ -14,11 +14,11 @@ module.exports = class InventoryCommand {
 
 	static help(gameEngine, actor) {
 		if(!actor.isPlayer()) return
-		gameEngine.writeLine('help: inventory')
+		gameEngine.writeLine('help: inventory - list items you are carrying')
 	}
 
 	static parse(gameEngine, actor, params) {
-		if(params.length!=0) return module.exports.help()
+		if(params.length!=0) return module.exports.help(gameEngine, actor)
 
 		return new module.exports(gameEngine, actor)
 	}

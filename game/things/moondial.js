@@ -6,6 +6,8 @@ module.exports = function(gameEngine){
 	t.setDescription('The moondial is a large stone plinth with a faded white marble dial, the gnomon is blued steel with a touch of rust.')
 	
 	t.preventAction('take')
+	t.preventAction('drop')
+	t.preventAction('give')
 	
 	return t
 }

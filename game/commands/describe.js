@@ -13,7 +13,7 @@ module.exports = class ExamineCommand {
 			return
 		}
 		if(!this.actor.isPlayer()) return
-		this.gameEngine.writeLine(this.thing.description)
+		this.gameEngine.writeLine(this.thing.description.italic)
 	}
 
 	static help(gameEngine, actor) {
