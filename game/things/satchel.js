@@ -5,5 +5,7 @@ module.exports = function(gameEngine){
 
 	t.setDescription('The satchel is a sturdy bag made out of worn leather. It has a handy strap for carrying.')
 
+	t.preventAction('drop')
+
 	return t
 }

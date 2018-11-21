@@ -1,41 +1,42 @@
 const CommandRegistry = require('../../lib/CommandRegistry')
-const CommandStatus = require('../../lib/CommandStatus')
 
 module.exports = class HelpCommand {
-	constructor(actor, command) {
+	constructor(gameEngine, actor, command) {
+		this.gameEngine = gameEngine
 		this.command = 'help'
 		this.actor = actor
 		this.command = command
 	}
 
-	execute(actor) {
+	execute() {
+		if(!this.actor.isPlayer()) return
+
 		if(this.command) {
 			var x = CommandRegistry.get(this.command)
-			if(!x) return new CommandStatus(actor, 'help: No such command '+x)
-			return x.help(actor)
+			if(!x) {
+				this.gameEngine.writeLine('help: no such command '+x)
+				return
+			}
+			return x.help(this.gameEngine, this.actor)
 		}
 
 		// Generic Help.
-		var actions = [].concat(this.actor.gameEngine.getActions(), this.actor.getActions(), this.actor.location.getActions())
-
-		return new CommandStatus(this.actor, 'Actions: '+actions.join(', '))
+		var actions = [].concat(this.gameEngine.getActions(), this.actor.getActions(), this.actor.location.getActions())
+		
+		this.gameEngine.writeLine('actions: '+actions.join(', '))
 	}
 
-	static help(actor) {
-		return new CommandStatus(actor,'help: help <entity>')
+	static help(gameEngine, actor) {
+		if(!actor.isPlayer()) return
+		gameEngine.writeLine('help: help [<command>] - get help on the specified command, or list all currenly available commands')
 	}
 
-	static parse(actor, params) {
-		if(params.length==0) return new module.exports(actor)
+	static parse(gameEngine, actor, params) {
+		if(params.length==0 || params.length>1) return new module.exports(gameEngine, actor)
 
-		var ge = actor.gameEngine
+		var obj = gameEngine.getThing(params[0]) || gameEngine.getLocation(params[0]) ||  gameEngine.getCharacter(params[0])
 
-		var obj = ge.getThing(params[0])
-		if(!obj) obj = ge.getLocation(params[0])
-		if(!obj) obj = ge.getCharacter(params[0])
-		if(!obj) return new CommandStatus(actor, 'Cannot find '+params[0])
-
-		return new module.exports(actor, obj)
+		return new module.exports(gameEngine, actor, obj)
 	}
 }
 

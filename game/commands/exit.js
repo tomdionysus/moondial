@@ -1,24 +1,30 @@
-const CommandStatus = require('../../lib/CommandStatus') 
-
 module.exports = class ExitCommand {
-	constructor(actor) {
+	constructor(gameEngine, actor) {
+		this.gameEngine = gameEngine
 		this.command = 'exit'
 		this.actor = actor
 	}
 
 	execute() {
-		this.actor.gameEngine.writeLine('Shutting your eyes, you tell yourself you will wake on the count of 3.')
+		switch(this.gameEngine.getRandomInt(10)) {
+		case 0:
+			this.gameEngine.writeLine('Come back soon, Gallagher will miss you!')
+			break
+		default:
+			this.gameEngine.writeLine('Shutting your eyes, you tell yourself you will wake on the count of 3.')
+		}
 		process.exit()
 	}
 
-	static help(actor) {
-		return new CommandStatus(actor,'help: exit')
+	static help(gameEngine, actor) {
+		if(!actor.isPlayer()) return
+		gameEngine.writeLine('help: exit - exits the game')
 	}
 
-	static parse(actor, params) {
+	static parse(gameEngine, actor, params) {
 		if(params.length!=0) return module.exports.help()
 
-		return new module.exports(actor)
+		return new module.exports(gameEngine, actor)
 	}
 }
 

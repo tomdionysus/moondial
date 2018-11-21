@@ -1,7 +1,6 @@
-const CommandStatus = require('../../lib/CommandStatus') 
-
 module.exports = class GoCommand {
-	constructor(actor, direction, location) {
+	constructor(gameEngine, actor, direction, location) {
+		this.gameEngine = gameEngine
 		this.command = 'go'
 		this.actor = actor
 		this.direction = direction
@@ -9,21 +8,35 @@ module.exports = class GoCommand {
 	}
 
 	execute() {
+		if(!this.location) {
+			if(!this.actor.isPlayer()) this.gameEngine.writeLine('Cannot go '+this.direction+' from here')
+			return
+		}
+
+		var oldLocation = this.actor.location
 		this.actor.setLocation(this.location)
-		return new CommandStatus(this.actor, 'You go '+this.direction)
+
+		if(!this.actor.isPlayer()) {
+			if(oldLocation==this.gameEngine.player.location) this.actor.narrative('leaves')
+			return
+		}
+
+		this.actor.narrative('go '+this.direction)
+
+		this.actor.doCommand('look')
 	}
 
-	static help(actor) {
-		return new CommandStatus(actor,'help: go <direction>')
+	static help(gameEngine, actor) {
+		if(!actor.isPlayer()) return
+		gameEngine.writeLine('help: go <direction> - go in the specified direction')
 	}
 
-	static parse(actor, params) {
-		if(params.length==0 || params.length>1) return module.exports.help()
+	static parse(gameEngine, actor, params) {
+		if(params.length==0 || params.length>1) return module.exports.help(gameEngine, actor)
 
 		var direction = params.shift()
 		var location = actor.location.getDirection(direction)
-		if(!location) return new CommandStatus(actor,'Cannot go '+direction+' from here')
 
-		return new module.exports(actor, direction, location)
+		return new module.exports(gameEngine, actor, direction, location)
 	}
 }

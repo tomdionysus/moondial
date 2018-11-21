@@ -1,24 +1,26 @@
-const CommandStatus = require('../../lib/CommandStatus') 
-
-module.exports = class DebugCommand {
-	constructor(actor) {
+module.exports = class InventoryCommand {
+	constructor(gameEngine, actor) {
+		this.gameEngine = gameEngine
 		this.command = 'inventory'
 		this.actor = actor
 		this.thing = actor
 	}
 
 	execute() {
-		return new CommandStatus(this.actor, 'inventory: '+this.actor.getVisibleThings().join(', '))
+		if(!this.actor.isPlayer()) return
+
+		this.gameEngine.writeLine('inventory: '+this.actor.getVisibleThings().join(', '))
 	}
 
-	static help(actor) {
-		return new CommandStatus(actor,'help: inventory')
+	static help(gameEngine, actor) {
+		if(!actor.isPlayer()) return
+		gameEngine.writeLine('help: inventory')
 	}
 
-	static parse(actor, params) {
+	static parse(gameEngine, actor, params) {
 		if(params.length!=0) return module.exports.help()
 
-		return new module.exports(actor)
+		return new module.exports(gameEngine, actor)
 	}
 }
 

@@ -1,22 +1,22 @@
-const CommandStatus = require('../../lib/CommandStatus') 
-
 module.exports = class DebugCommand {
-	constructor(actor, thing) {
+	constructor(gameEngine, actor, thing) {
+		this.gameEngine = gameEngine
 		this.command = 'debug'
 		this.actor = actor
 		this.thing = thing
 	}
 
 	execute() {
+		if(!this.actor.isPlayer()) return
 		console.log(this.thing)
-		return new CommandStatus(this.actor, '')
 	}
 
-	static help(actor) {
-		return new CommandStatus(actor,'help: debug <entity>')
+	static help(gameEngine, actor) {
+		if(!actor.isPlayer()) return
+		gameEngine.writeLine('help: debug <entity> - debug dumps the object to the terminal')
 	}
 
-	static parse(actor, params) {
+	static parse(gameEngine, actor, params) {
 		if(params.length==0) return module.exports.help()
 		var ge = actor.gameEngine
 
@@ -25,7 +25,7 @@ module.exports = class DebugCommand {
 		if(!obj) obj = ge.getCharacter(params[0])
 		if(!obj) return new CommandStatus(actor,'Cannot find '+params[0])
 
-		return new module.exports(actor, obj)
+		return new module.exports(gameEngine, actor, obj)
 	}
 }
 
