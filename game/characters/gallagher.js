@@ -14,6 +14,7 @@ module.exports = function(gameEngine){
 		if (this.gameEngine.player.location == this.location) {
 			if(getRandomInt(10) == 0) { return this.say('bbrrrt!') }
 			if(getRandomInt(10) == 1) { return this.say('meowww...') }
+			if(getRandomInt(10) == 2) { return this.narrative('rolls around on the ground showing his belly to you.') }
 		}
 	}.bind(l), 10000)
 
