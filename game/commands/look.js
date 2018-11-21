@@ -1,17 +1,18 @@
 const CommandStatus = require('../../lib/CommandStatus') 
 
 module.exports = class LookCommand {
-	constructor(actor, location) {
+	constructor(actor, thing) {
+		this.command = 'look'
 		this.actor = actor
-		this.location = location
+		this.thing = thing
 	}
 
 	execute() {
-		var str = this.location.description
-		var p = this.location.getVisibleThings()
-		var j = this.location.getVisibleCharacters()
+		var str = this.thing.description
+		var p = this.thing.getVisibleThings()
+		var j = this.thing.getVisibleCharacters()
 		str += '\n\nYou can see: '+p.concat(j).join(', ')
-		str += '\nYou can go: '+this.location.getDirections().join(', ')
+		str += '\nYou can go: '+this.actor.location.getDirections().join(', ')
 		return new CommandStatus(this.actor, str)
 	}
 
@@ -20,7 +21,7 @@ module.exports = class LookCommand {
 	}
 
 	static parse(actor, params) {
-		if(params.length!=0) return module.exports.help()
+		if(params.length!=0) return module.exports.help(actor)
 
 		return new module.exports(actor, actor.location)
 	}

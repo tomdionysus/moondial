@@ -3,6 +3,7 @@ const CommandStatus = require('../../lib/CommandStatus')
 
 module.exports = class HelpCommand {
 	constructor(actor, command) {
+		this.command = 'help'
 		this.actor = actor
 		this.command = command
 	}

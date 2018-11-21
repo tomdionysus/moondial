@@ -18,18 +18,17 @@ module.exports = function(gameEngine){
 		}
 	}.bind(l), 10000)
 
-	l.addAction('pat', function(actor) {
-		if(actor!=this.gameEngine.player) return true
-		this.gameEngine.writeLine('gallagher rubs his head up against you.')
-		this.say('...purr...')
-		return true
-	})
+	// l.allowAction('pat', function(actor) {
+	// 	if(actor!=this.gameEngine.player) return true
+	// 	this.gameEngine.writeLine('gallagher rubs his head up against you.')
+	// 	this.say('...purr...')
+	// 	return true
+	// })
 
-	l.addBefore('pat', function(actor) {
-		if(actor!=this.gameEngine.player) return true
+	l.addBefore('examine', function(command) {
+		if(command.actor != this.gameEngine.player) return true
 		this.gameEngine.writeLine('gallagher notices you moving toward him and runs away.')
 		this.say('...brrtt...')
-		this.doCommand('go north')
 		return true
 	})
 

@@ -2,7 +2,9 @@ const CommandStatus = require('../../lib/CommandStatus')
 
 module.exports = class DebugCommand {
 	constructor(actor) {
+		this.command = 'inventory'
 		this.actor = actor
+		this.thing = actor
 	}
 
 	execute() {

@@ -2,6 +2,7 @@ const CommandStatus = require('../../lib/CommandStatus')
 
 module.exports = class ExamineCommand {
 	constructor(actor, thing) {
+		this.command = 'examine'
 		this.actor = actor
 		this.thing = thing
 	}

@@ -2,6 +2,7 @@ const CommandStatus = require('../../lib/CommandStatus')
 
 module.exports = class GoCommand {
 	constructor(actor, direction, location) {
+		this.command = 'go'
 		this.actor = actor
 		this.direction = direction
 		this.location = location
