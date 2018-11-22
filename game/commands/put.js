@@ -15,7 +15,7 @@ module.exports = class PutCommand {
 		// Thing (Character) must exist, be a container and be in the same location or the inventory of the actor
 		if(!this.thing || !(this.thing instanceof Container) || (!this.actor.containsThing(this.thing.id) && this.thing.location.id != this.actor.location.id)) {
 			if (this.actor.isPlayer()) {
-				this.gameEngine.writeLine('You can\'t see > '+this.thingId)
+				this.gameEngine.writeLine('You can\'t see '+this.thingId)
 			}
 			return
 		}
