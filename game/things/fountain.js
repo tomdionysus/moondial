@@ -1,7 +1,7 @@
-const Container = require('../../lib/Container')
+const ContainerFixture = require('../../lib/ContainerFixture')
 
 module.exports = function(gameEngine){
-	var t = new Container({ id: 'fountain', gameEngine: gameEngine })
+	var t = new ContainerFixture({ id: 'fountain', gameEngine: gameEngine })
 
 	t.setDescription('A baroque stone fountain.')
 

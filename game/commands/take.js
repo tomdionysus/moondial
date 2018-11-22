@@ -22,7 +22,12 @@ module.exports = class TakeCommand extends Command {
 
 		// If there's no container then the source is the actor location
 		this.fromContainer = !!this.thing
-		if(!this.thing) { this.thing = this.actor.location }
+		if(!this.thing) { 
+			this.thing = this.actor.location 
+			this.thingId = this.actor.location.id
+		}
+
+		// this.gameEngine.writeLine("take thing > "+this.thingId+", movething > "+this.moveThingId+", fromContainer > "+ this.fromContainer)
 
 		// Thing must exist
 		if(!this.thing) {
@@ -45,8 +50,10 @@ module.exports = class TakeCommand extends Command {
 		}
 
 		// moveThing must not be fixed
-		if(this.moveThing.isImmovable()) {
-			this.gameEngine.writeLine('You can\'t take '+this.moveThingId)
+		if(!this.fromContainer && this.moveThing.isImmovable()) {
+			if (this.actor.isPlayer()) {
+				this.gameEngine.writeLine('You can\'t take '+this.moveThingId)
+			}
 			return this.stop()
 		}
 
@@ -66,15 +73,16 @@ module.exports = class TakeCommand extends Command {
 				}
 				return this.stop()
 			}
+	
+			// moveThing must be in the source
+			if(!this.thing.containsThing(this.moveThing.id)) {
+				if (this.actor.isPlayer()) {
+					this.gameEngine.writeLine(this.thing.id+' doesn\'t contain '+this.moveThingId)
+				}
+				return this.stop()
+			}
 		}
 
-		// moveThing must exist and be in the source
-		if(!this.moveThing || (!this.thing.containsThing(this.moveThing.id))) {
-			if (this.actor.isPlayer()) {
-				this.gameEngine.writeLine(this.thing.id+' doesn\'t contain '+this.moveThingId)
-			}
-			return this.stop()
-		}
 	}
 
 	execute() {
