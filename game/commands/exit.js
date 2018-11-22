@@ -1,8 +1,8 @@
-module.exports = class ExitCommand {
+const Command = require('../../lib/Command')
+
+module.exports = class ExitCommand extends Command {
 	constructor(gameEngine, actor) {
-		this.gameEngine = gameEngine
-		this.command = 'exit'
-		this.actor = actor
+		super('exit',gameEngine,actor)
 	}
 
 	execute() {

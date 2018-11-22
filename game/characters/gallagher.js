@@ -28,36 +28,38 @@ module.exports = function(gameEngine){
 	l.addBefore('give', function(command) {
 		if(command.giftThingId!='fish') {
 			this.narrative('doesn\'t want '+command.giftThingId)
-			return true
+			return command.stop()
 		}
-		return false
+		return
 	})
 
 	// Gallagher loves fish.
 	l.addAfter('give', function(command) {
-		if(command.giftThingId!='fish') return false
+		if(command.giftThingId!='fish') return
 		this.narrative('is really loving his fish')
 		this.say('...purrr!')
+		this.setDescription('Gallagher is a large, friendly ginger cat. He\'s a bit shy. He\'s carrying a small fish around and looking very pleased with himself.')
 	})
 
-	// Gallagher won't let you pat him until he has the fish.
 	l.addBefore('pat', function(command) {
-		if(!command.actor.isPlayer()) return true
-		if(this.containsThing('fish')) return false
+		if(!command.actor.isPlayer()) return command.stop()
+		// Gallagher will let you pat him if he has the fish
+		if(this.containsThing('fish')) return
+		// 
 		this.narrative('notices you moving toward him and runs away')
 		this.say('...brrtt...')
-		return true
+		command.stop()
+		return 
 	})
 
 	l.addAfter('pat', function(command) {
-		if(!command.actor.isPlayer()) return true
+		if(!command.actor.isPlayer()) return command.stop()
 		this.narrative('rubs his head up against your leg and starts purring like a motorbike')
 		if(this.containsThing('key')) {
 			this.doCommand('drop key')
 		}
-		return true
+		return command.stop()
 	})
-
 
 	return l
 }

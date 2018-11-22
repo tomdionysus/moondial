@@ -27,6 +27,7 @@ class Moondial extends GameEngine {
 
 		this.player.setLocation('courtyard')
 		this.player.addThing('satchel')
+		this.player.allowAction('inventory')
 
 		super.start()
 	}

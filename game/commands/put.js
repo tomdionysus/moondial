@@ -1,23 +1,22 @@
 const Container = require('../../lib/Container')
+const Command = require('../../lib/Command')
 
-module.exports = class PutCommand {
+module.exports = class PutCommand extends Command {
 	constructor(gameEngine, actor, thing, thingId, moveThing, moveThingId) {
-		this.gameEngine = gameEngine
-		this.command = 'put'
-		this.actor = actor
+		super('put',gameEngine,actor)
 		this.thing = thing
 		this.thingId = thingId
 		this.moveThing = moveThing
 		this.moveThingId = moveThingId
 	}
 
-	execute() {
+	check() {
 		// Thing (Character) must exist, be a container and be in the same location or the inventory of the actor
 		if(!this.thing || !(this.thing instanceof Container) || (!this.actor.containsThing(this.thing.id) && this.thing.location.id != this.actor.location.id)) {
 			if (this.actor.isPlayer()) {
 				this.gameEngine.writeLine('You can\'t see '+this.thingId)
 			}
-			return
+			return this.stop()
 		}
 
 		// moveThing must exist and be in the same location or be in the actors inventory
@@ -25,7 +24,7 @@ module.exports = class PutCommand {
 			if (this.actor.isPlayer()) {
 				this.gameEngine.writeLine('You can\'t see '+this.moveThingId)
 			}
-			return
+			return this.stop()
 		}
 
 		// moveThing must not be a container
@@ -33,9 +32,11 @@ module.exports = class PutCommand {
 			if (this.actor.isPlayer()) {
 				this.gameEngine.writeLine('You can\'t put '+this.moveThingId+' in '+this.thingId)
 			}
-			return
+			return this.stop()
 		}
+	}
 
+	execute() {
 		// Move the thing
 		this.moveThing.location.removeThing(this.moveThing.id)
 		this.thing.addThing(this.moveThing.id)

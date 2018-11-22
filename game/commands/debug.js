@@ -1,13 +1,18 @@
-module.exports = class DebugCommand {
-	constructor(gameEngine, actor, thing) {
-		this.gameEngine = gameEngine
-		this.command = 'debug'
-		this.actor = actor
+const Command = require('../../lib/Command')
+
+module.exports = class DebugCommand extends Command {
+	constructor(gameEngine, actor, thing, thingId) {
+		super('debug',gameEngine,actor)
 		this.thing = thing
+		this.thingId = thingId
+	}
+
+	check() {
+		// Debug only works for player
+		if(!this.actor.isPlayer()) return this.stop()
 	}
 
 	execute() {
-		if(!this.actor.isPlayer()) return
 		console.log(this.thing)
 	}
 
@@ -17,13 +22,10 @@ module.exports = class DebugCommand {
 	}
 
 	static parse(gameEngine, actor, params) {
-		if(params.length==0) return module.exports.help()
-		var ge = actor.gameEngine
+		if(params.length==0) return module.exports.help(gameEngine, actor)
 
-		var obj = ge.getThing(params[0])
-		if(!obj) obj = ge.getLocation(params[0])
-		if(!obj) obj = ge.getCharacter(params[0])
-		if(!obj) return new CommandStatus(actor,'Cannot find '+params[0])
+		var obj = gameEngine.get(params[0])
+		if(!obj) return module.exports.help(gameEngine, actor)
 
 		return new module.exports(gameEngine, actor, obj)
 	}

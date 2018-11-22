@@ -1,18 +1,21 @@
-module.exports = class ExamineCommand {
+const Command = require('../../lib/Command')
+
+module.exports = class DescribeCommand extends Command {
 	constructor(gameEngine, actor, thing, thingId) {
-		this.gameEngine = gameEngine
-		this.command = 'describe'
-		this.actor = actor
+		super('describe',gameEngine,actor)
 		this.thing = thing
 		this.thingId = thingId
 	}
 
-	execute() {
+	check() {
+		if(!this.actor.isPlayer()) return this.stop()
 		if(!this.thing || (!this.actor.containsThing(this.thing.id) && this.thing.location.id!=this.actor.location.id)) {
 			this.actor.narrative('can\'t see '+this.thingId)
-			return
+			return this.stop()
 		}
-		if(!this.actor.isPlayer()) return
+	}
+
+	execute() {
 		this.gameEngine.writeLine(this.thing.description.italic)
 	}
 

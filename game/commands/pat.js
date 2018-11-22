@@ -1,21 +1,28 @@
-module.exports = class PatCommand {
+const Command = require('../../lib/Command')
+
+module.exports = class PatCommand extends Command {
 	constructor(gameEngine, actor, thing, thingId) {
-		this.gameEngine = gameEngine
-		this.command = 'pat'
-		this.actor = actor
+		super('pat',gameEngine,actor)
 		this.thing = thing
 		this.thingId = thingId
 	}
 
-	execute() {
-		if(!this.actor.isPlayer()) return
-
+	check() {
+		// Thing must exist, and have a location, and be either in the actors inventory or in the actors location
 		if(!this.thing || !this.thing.location || (!this.actor.containsThing(this.thingId) && this.thing.location.id!=this.actor.location.id)) {
-			actor.writeLine('You can\'t see '+this.thingId)
-			return	
+			if (this.actor.isPlayer()) {
+				this.actor.narrative(' can\'t see '+this.thingId)
+			}
+			return this.stop()
 		}
+	}
 
-		this.actor.narrative('pat '+this.thing.id)
+	execute() {
+		if (this.actor.isPlayer()) {
+			this.actor.narrative('pat '+this.thing.id)
+		} else {
+			this.actor.narrative('pats '+this.thing.id)
+		}
 	}
 
 	static help(gameEngine, actor) {

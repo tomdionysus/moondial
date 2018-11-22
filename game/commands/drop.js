@@ -1,19 +1,21 @@
-module.exports = class TakeCommand {
+const Command = require('../../lib/Command')
+
+module.exports = class DropCommand extends Command {
 	constructor(gameEngine, actor, thing, thingId) {
-		this.gameEngine = gameEngine
-		this.command = 'take'
-		this.actor = actor
+		super('drop',gameEngine,actor)
 		this.thing = thing
 		this.thingId = thingId
 	}
 
-	execute() {
+	check() {
 		// Thing must be in the actors invetory
 		if(!this.thing || (!this.actor.containsThing(this.thing.id))) {
 			this.actor.narrative('don\'t have '+this.thingId)
-			return
+			return this.stop()
 		}
+	}
 
+	execute() {
 		// Move the thing
 		if(this.thing.location) this.thing.location.removeThing(this.thing.id)
 		this.actor.location.addThing(this.thing.id)

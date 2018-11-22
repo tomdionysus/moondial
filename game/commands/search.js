@@ -1,24 +1,27 @@
-module.exports = class SearchCommand {
+const Command = require('../../lib/Command')
+
+module.exports = class SearchCommand extends Command {
 	constructor(gameEngine, actor, thing, thingId) {
-		this.gameEngine = gameEngine
-		this.command = 'search'
-		this.actor = actor
+		super('search',gameEngine,actor)
+
 		this.thing = thing
 		this.thingId = thingId
 	}
 
-	execute() {
+	check() {
 		if(!this.thing || (!this.actor.containsThing(this.thing.id) && this.thing.location.id!=this.actor.location.id)) {
 			this.gameEngine.narrative('can\'t see '+this.thingId)
-			return
+			return this.stop()
 		}
+	}
 
+	execute() {
 		if(!this.actor.isPlayer()) {
 			this.actor.narrative('searches '+this.thing.id)
 			return
 		} 
-		this.actor.narrative('search '+this.thing.id)
-		this.gameEngine.writeLine(this.thing.id+' contains: '+this.thing.getVisibleThings().join(', '))
+		this.gameEngine.writeLine('You search '+this.thing.id)
+		this.gameEngine.writeLine(this.thing.id+' contains: '+this.thing.getThings().join(', '))
 	}
 
 	static help(gameEngine, actor) {

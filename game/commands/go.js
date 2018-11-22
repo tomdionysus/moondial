@@ -1,28 +1,29 @@
-module.exports = class GoCommand {
+const Command = require('../../lib/Command')
+
+module.exports = class GoCommand extends Command {
 	constructor(gameEngine, actor, direction, location) {
-		this.gameEngine = gameEngine
-		this.command = 'go'
-		this.actor = actor
+		super('go',gameEngine,actor)
 		this.direction = direction
 		this.location = location
 	}
 
-	execute() {
+	check() {
 		if(!this.location) {
-			if(!this.actor.isPlayer()) this.gameEngine.writeLine('Cannot go '+this.direction+' from here')
-			return
+			if(this.actor.isPlayer()) this.gameEngine.writeLine('Cannot go '+this.direction+' from here')
+			return this.stop()
 		}
+	}
 
+	execute() {
 		var oldLocation = this.actor.location
 		this.actor.setLocation(this.location)
 
 		if(!this.actor.isPlayer()) {
 			if(oldLocation==this.gameEngine.player.location) this.actor.narrative('leaves')
-			return
+			if(this.location==this.gameEngine.player.location) this.actor.narrative('arrives')
 		}
 
 		this.actor.narrative('go '+this.direction)
-
 		this.actor.doCommand('look')
 	}
 

@@ -1,21 +1,21 @@
-module.exports = class GiveCommand {
+const Command = require('../../lib/Command')
+
+module.exports = class GiveCommand extends Command {
 	constructor(gameEngine, actor, thing, thingId, giftThing, giftThingId) {
-		this.gameEngine = gameEngine
-		this.command = 'give'
-		this.actor = actor
+		super('give',gameEngine,actor)
 		this.thing = thing
 		this.thingId = thingId
 		this.giftThing = giftThing
 		this.giftThingId = giftThingId
 	}
 
-	execute() {
+	check() {
 		// Thing (Character) must exist and be in the same location as the actor
 		if(!this.thing || (this.thing.location.id != this.actor.location.id)) {
 			if (this.actor.isPlayer()) {
 				this.gameEngine.writeLine('You can\'t see '+this.thingId)
 			}
-			return
+			return this.stop()
 		}
 
 		// giftThing must exist and be in the same location or be in the characters inventory
@@ -23,9 +23,11 @@ module.exports = class GiveCommand {
 			if (this.actor.isPlayer()) {
 				this.gameEngine.writeLine('You can\'t see '+this.giftThingId)
 			}
-			return
+			return this.stop()
 		}
+	}
 
+	execute() {
 		// Move the thing
 		this.giftThing.location.removeThing(this.giftThing.id)
 		this.thing.addThing(this.giftThing.id)

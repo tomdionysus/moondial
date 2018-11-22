@@ -1,13 +1,15 @@
-module.exports = class LookCommand {
+const Command = require('../../lib/Command')
+
+module.exports = class LookCommand extends Command {
 	constructor(gameEngine, actor) {
-		this.gameEngine = gameEngine
-		this.command = 'look'
-		this.actor = actor
+		super('look',gameEngine,actor)
+	}
+
+	check() {
+		if(!this.actor.isPlayer()) return this.stop()
 	}
 
 	execute() {
-		if(!this.actor.isPlayer()) return
-
 		var str = this.actor.location.description
 		var p = this.actor.location.getVisibleThings()
 		var j = this.actor.location.getVisibleCharacters()

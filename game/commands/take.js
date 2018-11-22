@@ -1,27 +1,27 @@
 const Container = require('../../lib/Container')
+const Command = require('../../lib/Command')
 
-module.exports = class TakeCommand {
+module.exports = class TakeCommand extends Command {
 	constructor(gameEngine, actor, thing, thingId, moveThing, moveThingId) {
-		this.gameEngine = gameEngine
-		this.command = 'take'
-		this.actor = actor
+		super('take',gameEngine,actor)
+
 		this.thing = thing
 		this.thingId = thingId
 		this.moveThing = moveThing
 		this.moveThingId = moveThingId
 	}
 
-	execute() {
+	check() {
 		// Do we already have the thing?
 		if(this.actor.containsThing(this.moveThingId)) {
 			if (this.actor.isPlayer()) {
 				this.gameEngine.writeLine('You already have '+this.moveThingId)
 			}
-			return
+			return this.stop()
 		}
 
 		// If there's no container then the source is the actor location
-		var fromContainer = !!this.thing
+		this.fromContainer = !!this.thing
 		if(!this.thing) { this.thing = this.actor.location }
 
 		// Thing must exist
@@ -29,24 +29,42 @@ module.exports = class TakeCommand {
 			if (this.actor.isPlayer()) {
 				this.gameEngine.writeLine('You can\'t see '+this.thingId)
 			}
-			return
+			return this.stop()
+		}
+
+		// moveThing must exist
+		if(!this.moveThing) {
+			if (this.actor.isPlayer()) {
+				if(this.fromContainer) {
+					this.gameEngine.writeLine('You can\'t see '+this.moveThingId+' in '+this.thingId)
+				} else {
+					this.gameEngine.writeLine('You can\'t see '+this.moveThingId)
+				}
+			}
+			return this.stop()
+		}
+
+		// moveThing must not be fixed
+		if(this.moveThing.isImmovable()) {
+			this.gameEngine.writeLine('You can\'t take '+this.moveThingId)
+			return this.stop()
 		}
 
 		// If from a container...
-		if(fromContainer) {
+		if(this.fromContainer) {
 			// Source must actually be a container
 			if(!(this.thing instanceof Container)) {
 				if (this.actor.isPlayer()) {
 					this.gameEngine.writeLine('You can\'t take things from '+this.thingId)
 				}
-				return		
+				return this.stop()	
 			}
 			// Source must be in the same location or the inventory of the actor
 			if(!this.actor.containsThing(this.thing.id) && this.thing.location.id != this.actor.location.id) {
 				if (this.actor.isPlayer()) {
 					this.gameEngine.writeLine('You can\'t see '+this.thingId)
 				}
-				return
+				return this.stop()
 			}
 		}
 
@@ -55,15 +73,18 @@ module.exports = class TakeCommand {
 			if (this.actor.isPlayer()) {
 				this.gameEngine.writeLine(this.thing.id+' doesn\'t contain '+this.moveThingId)
 			}
-			return
+			return this.stop()
 		}
+	}
+
+	execute() {
 
 		// Move the thing
 		this.moveThing.location.removeThing(this.moveThing.id)
 		this.actor.addThing(this.moveThing.id)
 
 		// Do the narrative
-		var fromStr = fromContainer ? ' from '+this.thing.id : ''
+		var fromStr = this.fromContainer ? ' from '+this.thing.id : ''
 		if (this.actor.isPlayer()) {
 			this.actor.narrative('take '+this.moveThing.id+fromStr)
 		} else {

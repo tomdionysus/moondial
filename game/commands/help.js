@@ -1,16 +1,17 @@
 const CommandRegistry = require('../../lib/CommandRegistry')
+const Command = require('../../lib/Command')
 
-module.exports = class HelpCommand {
+module.exports = class HelpCommand extends Command {
 	constructor(gameEngine, actor, command) {
-		this.gameEngine = gameEngine
-		this.command = 'help'
-		this.actor = actor
+		super('help',gameEngine,actor)
 		this.command = command
 	}
 
-	execute() {
-		if(!this.actor.isPlayer()) return
+	check() {
+		if(!this.actor.isPlayer()) return this.stop()
+	}
 
+	execute() {
 		if(this.command) {
 			var x = CommandRegistry.get(this.command)
 			if(!x) {
@@ -36,12 +37,22 @@ module.exports = class HelpCommand {
 		}
 		if(st.length>0) str+=st
 
-		// Ground
-		str += 'Ground'.bold+'\n'
+		// Location
+		str += 'Location'.bold+'\n'
 		things = this.actor.location.getVisibleThings()
 		st = ''
 		for(i in things) {
-			thing = this.gameEngine.getThing(things[i])
+			thing = this.gameEngine.get(things[i])
+			st += thing.id+': '+(thing.getActions().join(', ')).italic+'\n'
+		}
+		if(st.length>0) str+=st
+
+		// Characters
+		str += 'Characters'.bold+'\n'
+		things = this.actor.location.getVisibleCharacters()
+		st = ''
+		for(i in things) {
+			thing = this.gameEngine.get(things[i])
 			st += thing.id+': '+(thing.getActions().join(', ')).italic+'\n'
 		}
 		if(st.length>0) str+=st

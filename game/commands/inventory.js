@@ -1,14 +1,16 @@
-module.exports = class InventoryCommand {
+const Command = require('../../lib/Command')
+
+module.exports = class InventoryCommand extends Command {
 	constructor(gameEngine, actor) {
-		this.gameEngine = gameEngine
-		this.command = 'inventory'
-		this.actor = actor
+		super('inventory',gameEngine,actor)
 		this.thing = actor
 	}
 
-	execute() {
-		if(!this.actor.isPlayer()) return
+	check() {
+		if(!this.actor.isPlayer()) return this.stop()
+	}
 
+	execute() {
 		this.gameEngine.writeLine('Inventory'.bold)
 		this.gameEngine.writeLine((this.actor.getVisibleThings().join(', ')).italic)
 	}
