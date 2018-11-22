@@ -5,7 +5,7 @@ The Moondial Text Adventure
 ## Installation
 
 ```bash
-git clone 
+git clone git@github.com:tomdionysus/moondial.git
 npm install
 ```
 
