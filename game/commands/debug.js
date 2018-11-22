@@ -1,6 +1,6 @@
 const Command = require('../../lib/Command')
 
-module.exports = class DebugCommand extends Command {
+class DebugCommand extends Command {
 	constructor(gameEngine, actor, thing, thingId) {
 		super('debug',gameEngine,actor)
 		this.thing = thing
@@ -31,4 +31,5 @@ module.exports = class DebugCommand extends Command {
 	}
 }
 
+module.exports = !!process.env.DEBUG ? DebugCommand : null
 
