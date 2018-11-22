@@ -31,5 +31,5 @@ class DebugCommand extends Command {
 	}
 }
 
-module.exports = !!process.env.DEBUG ? DebugCommand : null
+module.exports = process.env.DEBUG ? DebugCommand : null
 
