@@ -46,7 +46,7 @@ module.exports = function(gameEngine){
 		// Gallagher will let you pat him if he has the fish
 		if(this.containsThing('fish')) return
 		// 
-		this.narrative('notices you moving toward him and runs away')
+		this.narrative('runs away when you try to pat him. He sits down again further away and regards you playfully.')
 		this.say('...brrtt...')
 		command.stop()
 		return 
