@@ -10,7 +10,11 @@ module.exports = class SearchCommand extends Command {
 
 	check() {
 		if(!this.thing || (!this.actor.containsThing(this.thing.id) && this.thing.location.id!=this.actor.location.id)) {
-			this.gameEngine.narrative('can\'t see '+this.thingId)
+			if(!this.actor.isPlayer()) {
+				this.gameEngine.writeLine('You can\'t see '+this.thing.id)
+			} else {
+				this.actor.narrative('can\'t see '+this.thingId)
+			}
 			return this.stop()
 		}
 	}

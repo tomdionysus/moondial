@@ -9,7 +9,7 @@ module.exports = function(gameEngine){
 	l.addThing('calendar')
 	l.addThing('fish')
 
-	l.addDirection('up','mansion_upstairs')
+	l.addDirection('up','bedroom')
 	l.addDirection('south','courtyard')
 
 	return l
