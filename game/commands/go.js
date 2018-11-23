@@ -16,15 +16,19 @@ module.exports = class GoCommand extends Command {
 
 	execute() {
 		var oldLocation = this.actor.location
+
+		if(!this.actor.isPlayer()) {
+			if(oldLocation.id==this.gameEngine.player.location.id) this.actor.narrative('leaves '+this.direction)
+		}
+
 		this.actor.setLocation(this.location)
 
 		if(!this.actor.isPlayer()) {
-			if(oldLocation==this.gameEngine.player.location) this.actor.narrative('leaves')
-			if(this.location==this.gameEngine.player.location) this.actor.narrative('arrives')
+			if(this.actor.location.id==this.gameEngine.player.location.id) this.actor.narrative('arrives')
+		} else {
+			this.actor.narrative('go '+this.direction)
+			this.actor.doCommand('look')
 		}
-
-		this.actor.narrative('go '+this.direction)
-		this.actor.doCommand('look')
 	}
 
 	static help(gameEngine, actor) {

@@ -4,13 +4,15 @@ module.exports = function(gameEngine){
 
 	var l = new Location({ id: 'mansion', gameEngine: gameEngine })
 
-	l.setDescription('The ruins of the mansion block out the stars above. A ruined staircase leads up from a cracked and broken mosaic floor. Moss grows on the floor.')
-	l.addThing('floor')
-	l.addThing('calendar')
-	l.addThing('fish')
+	l.init(function(){
+		this.setDescription('The ruins of the mansion block out the stars above. A ruined staircase leads up from a cracked and broken mosaic floor. Moss grows on the floor.')
+		this.addThing('floor')
+		this.addThing('calendar')
 
-	l.addDirection('up','bedroom')
-	l.addDirection('south','courtyard')
+		this.addDirection('up','bedroom')
+		this.addDirection('south','courtyard')
+		this.addDirection('east','greenhouse')
+	})
 
 	return l
 }

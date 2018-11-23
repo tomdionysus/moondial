@@ -4,13 +4,17 @@ module.exports = function(gameEngine){
 
 	var l = new Location({ id: 'courtyard', gameEngine: gameEngine })
 
-	l.setDescription('You are in a courtyard. This night air is clear and sharp, the moon shines high and bright in the sky. Well-tended lawns stretch away south, as the dark stone ruins of the mansion block the stars to the north.')
-	l.addThing('moondial')
-	l.addThing('gnomon')
-	l.addCharacter('gallagher')
+	l.init(function(){
+		this.setDescription('You are in a courtyard. This night air is clear and sharp, the moon shines high and bright in the sky. Well-tended lawns stretch away south, as the dark stone ruins of the mansion block the stars to the north.')
+		
+		this.addThing('moondial')
+		this.addThing('gnomon')
+		
+		this.addCharacter('gallagher')
 
-	l.addDirection('north','mansion')
-	l.addDirection('south','lawns')
+		this.addDirection('north','mansion')
+		this.addDirection('south','lawns')
+	})
 
 	return l
 }

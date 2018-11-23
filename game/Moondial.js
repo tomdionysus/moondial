@@ -5,16 +5,6 @@ class Moondial extends GameEngine {
 	constructor(options) {
 		options = options || {}
 		super(options)
-
-		this.loadCommands(path.join(__dirname,'commands'))
-
-		this.loadThings(path.join(__dirname,'things'))
-		this.loadCharacters(path.join(__dirname,'characters'))
-		this.loadLocations(path.join(__dirname,'locations'))
-		
-		this.bootThings()
-		this.bootCharacters()
-		this.bootLocations()
 	}
 
 	start() {
@@ -25,11 +15,15 @@ class Moondial extends GameEngine {
 		this.writeLine('Written By Tom Cully & Niki Steel')
 		this.writeLine()
 
+		super.start()
+	}
+
+	init() {
+		super.init()
+		
 		this.player.setLocation('courtyard')
 		this.player.addThing('satchel')
 		this.player.allowAction('inventory')
-
-		super.start()
 	}
 }
 

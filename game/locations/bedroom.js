@@ -4,10 +4,15 @@ module.exports = function(gameEngine){
 
 	var l = new Location({ id: 'bedroom', gameEngine: gameEngine })
 
-	l.setDescription('The roof bedroom is mostly complete, the tattered drapes of an old four-posted bed blow in the wind. A weathered writing desk sits in the corner')
-	l.addThing('desk')
+	l.init(function(){
+		this.setDescription('The roof bedroom is mostly complete, the tattered drapes of an old four-posted bed blow in the wind. A weathered writing desk sits in the corner')
+		
+		this.addThing('desk')
 
-	l.addDirection('down','mansion')
+		this.addCharacter('ghost')
+		
+		this.addDirection('down','mansion')
+	})
 
 	return l
 }

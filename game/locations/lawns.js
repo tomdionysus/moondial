@@ -4,13 +4,15 @@ module.exports = function(gameEngine){
 
 	var l = new Location({ id: 'lawns', gameEngine: gameEngine })
 
-	l.setDescription('The lawns and flowerbeds are overgrown and shabby. A huge stone fountain sits at the crossroads of the paths.')
+	l.init(function(){
+		this.setDescription('The lawns and flowerbeds are overgrown and shabby. A huge stone fountain sits at the crossroads of the paths.')
 
-	l.addDirection('north','courtyard')
+		this.addDirection('north','courtyard')
 
-	l.addThing('fountain').addThing('fish')
-	
-	l.addCharacter('doggo')
+		this.addThing('fountain').addThing('fish')
+		
+		this.addCharacter('doggo')
+	})
 
 	return l
 }

@@ -52,6 +52,7 @@ module.exports = class HelpCommand extends Command {
 		things = this.actor.location.getVisibleCharacters()
 		st = ''
 		for(i in things) {
+			if(things[i]=='you') continue
 			thing = this.gameEngine.get(things[i])
 			st += thing.id+': '+(thing.getActions().join(', ')).italic+'\n'
 		}
