@@ -1,18 +1,17 @@
 const Location = require('../../lib/Location')
 
-module.exports = function(gameEngine){
+module.exports = class Bedroom extends Location {
+	constructor(options) {
+		options.id = 'bedroom'
+		options.description = 'The roof bedroom is mostly complete, the tattered drapes of an old four-posted bed blow in the wind. A weathered writing desk sits in the corner'
 
-	var l = new Location({ id: 'bedroom', gameEngine: gameEngine })
+		super(options)
+	}
 
-	l.init(function(){
-		this.setDescription('The roof bedroom is mostly complete, the tattered drapes of an old four-posted bed blow in the wind. A weathered writing desk sits in the corner')
-		
+	init() {
 		this.addThing('desk')
-
 		this.addCharacter('ghost')
 		
 		this.addDirection('down','mansion')
-	})
-
-	return l
+	}
 }

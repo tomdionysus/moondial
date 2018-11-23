@@ -1,21 +1,23 @@
 const Character = require('../../lib/Character')
 
-module.exports = function(gameEngine){
+module.exports = class Gallagher extends Character {
+	constructor(options) {
+		options.id = 'gallagher'
+		options.description = 'Gallagher is a large ginger cat. He\'s a bit shy.'
+		
+		super(options)
+	}
 
-	var l = new Character({ id: 'gallagher', gameEngine: gameEngine })
-
-	l.init(function() {
-		this.setDescription('Gallagher is a large, friendly ginger cat. He\'s a bit shy.')
-
+	init() {
 		setInterval(function(){
 			if (this.gameEngine.player.location == this.location) {
-				switch(gameEngine.getRandomInt(10)) {
+				switch(this.gameEngine.getRandomInt(10)) {
 				case 0:
 					return this.say('bbrrrt!') 
 				case 1:
 					return this.say('meowww...') 
 				case 2:
-					return this.narrative('rolls around on the ground showing his belly to you.')
+					return this.narrative('rolls around on the ground')
 				}
 			}
 		}.bind(this), 10000)
@@ -39,7 +41,7 @@ module.exports = function(gameEngine){
 			if(command.giftThingId!='fish') return
 			this.narrative('is really loving his fish')
 			this.say('...purrr!')
-			this.setDescription('Gallagher is a large, friendly ginger cat. He\'s a bit shy. He\'s carrying a small fish around and looking very pleased with himself.')
+			this.setDescription('Gallagher is a large, friendly ginger cat. He\'s a bit shy. He\'s carrying a small fish and looking very pleased with himself.')
 		})
 
 		this.addBefore('pat', function(command) {
@@ -47,7 +49,7 @@ module.exports = function(gameEngine){
 			// Gallagher will let you pat him if he has the fish
 			if(this.containsThing('fish')) return
 			// 
-			this.narrative('runs away when you try to pat him. He sits down again further away and regards you playfully.')
+			this.narrative('runs away when you try to pat him. He sits down again further away and regards you distainfully')
 			this.say('...brrtt...')
 			command.stop()
 			return 
@@ -61,7 +63,5 @@ module.exports = function(gameEngine){
 			}
 			return command.stop()
 		})
-	})
-
-	return l
+	}
 }

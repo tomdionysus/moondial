@@ -1,18 +1,17 @@
 const Location = require('../../lib/Location')
 
-module.exports = function(gameEngine){
+module.exports = class Lawns extends Location {
+	constructor(options) {
+		options.id = 'lawns'
+		options.description = 'The lawns and flowerbeds are overgrown and shabby. A huge stone fountain sits at the crossroads of the paths.'
 
-	var l = new Location({ id: 'lawns', gameEngine: gameEngine })
+		super(options)
+	}
 
-	l.init(function(){
-		this.setDescription('The lawns and flowerbeds are overgrown and shabby. A huge stone fountain sits at the crossroads of the paths.')
-
-		this.addDirection('north','courtyard')
-
+	init() {
 		this.addThing('fountain').addThing('fish')
-		
 		this.addCharacter('doggo')
-	})
-
-	return l
+		
+		this.addDirection('north','courtyard')
+	}
 }

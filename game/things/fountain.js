@@ -1,9 +1,10 @@
 const ContainerFixture = require('../../lib/ContainerFixture')
 
-module.exports = function(gameEngine){
-	var t = new ContainerFixture({ id: 'fountain', gameEngine: gameEngine })
-
-	t.setDescription('A baroque stone fountain.')
-
-	return t
+module.exports = class Fountain extends ContainerFixture {
+	constructor(options) {
+		options.id = 'fountain'
+		options.description = 'A baroque stone fountain.'
+		
+		super(options)
+	}
 }

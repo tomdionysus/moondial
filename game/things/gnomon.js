@@ -1,12 +1,15 @@
 const Thing = require('../../lib/Thing')
 
-module.exports = function(gameEngine){
-	var t = new Thing({ id: 'gnomon', gameEngine: gameEngine })
+module.exports = class Gnomon extends Thing {
+	constructor(options) {
+		options.id = 'gnomon'
+		options.description = 'The gnomon is a piece of metal about the length of your hand. It is made from steel with a little rust, and its tip is slightly bent.'
+		
+		super(options)
+	}
 
-	t.setDescription('The gnomon is a piece of metal about the length of your hand. It is made from steel with a little rust, and its tip is slightly bent.')
-	t.hide()
-
-	t.addAfter('*', function(){ this.show() })
-
-	return t
+	init() {
+		this.hide()
+		this.addAfter('*', function(){ this.show() })
+	}
 }

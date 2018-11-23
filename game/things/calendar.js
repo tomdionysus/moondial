@@ -1,9 +1,10 @@
 const Thing = require('../../lib/Thing')
 
-module.exports = function(gameEngine){
-	var t = new Thing({ id: 'calendar', gameEngine: gameEngine })
-
-	t.setDescription('A tatty calendar with pictures of dogs.')
-
-	return t
+module.exports = class Calendar extends Thing {
+	constructor(options) {
+		options.id = 'calendar'
+		options.description = 'A tatty calendar with pictures of dogs.'
+		
+		super(options)
+	}
 }

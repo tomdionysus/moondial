@@ -1,12 +1,14 @@
 const Location = require('../../lib/Location')
 
-module.exports = function(gameEngine){
+module.exports = class Courtyard extends Location {
+	constructor(options) {
+		options.id = 'courtyard'
+		options.description = 'You are in a courtyard. This night air is clear and sharp, the moon shines high and bright in the sky. Well-tended lawns stretch away south, as the dark stone ruins of the mansion block the stars to the north.'
 
-	var l = new Location({ id: 'courtyard', gameEngine: gameEngine })
+		super(options)
+	}
 
-	l.init(function(){
-		this.setDescription('You are in a courtyard. This night air is clear and sharp, the moon shines high and bright in the sky. Well-tended lawns stretch away south, as the dark stone ruins of the mansion block the stars to the north.')
-		
+	init() {
 		this.addThing('moondial')
 		this.addThing('gnomon')
 		
@@ -14,7 +16,5 @@ module.exports = function(gameEngine){
 
 		this.addDirection('north','mansion')
 		this.addDirection('south','lawns')
-	})
-
-	return l
+	}
 }

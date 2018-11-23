@@ -20,7 +20,7 @@ module.exports = class LookCommand extends Command {
 
 	static help(gameEngine, actor) {
 		if(!actor.isPlayer()) return
-		this.gameEngine.writeLine('help: look')
+		gameEngine.writeLine('help: look')
 	}
 
 	static parse(gameEngine, actor, params) {

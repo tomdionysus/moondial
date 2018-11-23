@@ -1,25 +1,29 @@
 const Character = require('../../lib/Character')
 
-module.exports = function(gameEngine){
+module.exports = class Doggo extends Character {
+	constructor(options) {
+		options.id = 'doggo'
+		options.description = 'Doggo is and old scruffy beagle. He looks a bit morose.'
+		
+		super(options)
 
-	var l = new Character({ id: 'doggo', gameEngine: gameEngine })
+		this.isOld = true
+	}
 
-	l.init(function() {
-		this.setDescription('Doggo is and old scruffy beagle. He looks a bit morose.')
-
+	init() {
 		this.isOld = true
 
 		setInterval(function(){
 			if(this.isOld) {
 				if (this.gameEngine.player.location.id == this.location.id) {
-					switch(gameEngine.getRandomInt(10)) {
+					switch(this.gameEngine.getRandomInt(10)) {
 					case 0:
 						return this.say('...whine...') 
 					}
 				}
 			} else {
 				if (this.gameEngine.player.location.id == this.location.id) {
-					switch(gameEngine.getRandomInt(10)) {
+					switch(this.gameEngine.getRandomInt(10)) {
 					case 0:
 						return this.say('woof!') 
 					case 1:
@@ -62,7 +66,5 @@ module.exports = function(gameEngine){
 			}
 			return command.stop()
 		})
-	})
-
-	return l
+	}
 }

@@ -1,26 +1,29 @@
 const ContainerFixture = require('../../lib/ContainerFixture')
 
-module.exports = function(gameEngine){
-	var t = new ContainerFixture({ id: 'desk', gameEngine: gameEngine })
-
-	t.setDescription('A weathered writing desk. The desk has several drawers with rusty keyholes.')
-
-	var locked = function(cmd) {
-		if(!cmd.actor.containsThing('key')) {
-			if(cmd.actor.isPlayer()) {
-				cmd.gameEngine.writeLine('The desk drawers are locked.')
-			}
-			return cmd.stop()
-		} else {
-			if(cmd.actor.isPlayer()) {
-				cmd.gameEngine.writeLine('You unlock the desk drawers with the key')
-			}
-		}
+module.exports = class Desk extends ContainerFixture {
+	constructor(options) {
+		options.id = 'desk'
+		options.description = 'A weathered writing desk. The desk has several drawers with rusty keyholes.'
+		
+		super(options)
 	}
 
-	t.addBefore('search', locked)
-	t.addBefore('take', locked)
-	t.addBefore('put', locked)
+	init() {
+		var locked = function(cmd) {
+			if(!cmd.actor.containsThing('key')) {
+				if(cmd.actor.isPlayer()) {
+					cmd.gameEngine.writeLine('The desk drawers are locked.')
+				}
+				return cmd.stop()
+			} else {
+				if(cmd.actor.isPlayer()) {
+					cmd.gameEngine.writeLine('You unlock the desk drawers with the key')
+				}
+			}
+		}
 
-	return t
+		this.addBefore('search', locked)
+		this.addBefore('take', locked)
+		this.addBefore('put', locked)
+	}
 }

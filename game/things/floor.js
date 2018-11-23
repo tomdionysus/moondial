@@ -1,9 +1,10 @@
 const Fixture = require('../../lib/Fixture')
 
-module.exports = function(gameEngine){
-	var t = new Fixture({ id: 'floor', gameEngine: gameEngine })
-
-	t.setDescription('The mosaic floor is so broken up that you can\'t make out the image.')
-	
-	return t
+module.exports = class Floor extends Fixture {
+	constructor(options) {
+		options.id = 'floor'
+		options.description = 'The mosaic floor is so broken up that you can\'t make out the image.'
+		
+		super(options)
+	}
 }
