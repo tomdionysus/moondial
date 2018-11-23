@@ -57,8 +57,8 @@ module.exports = class TakeCommand extends Command {
 			return this.stop()
 		}
 
-		// If from a container...
 		if(this.fromContainer) {
+			// If from a container...
 			// Source must actually be a container
 			if(!(this.thing instanceof Container)) {
 				if (this.actor.isPlayer()) {
@@ -78,6 +78,15 @@ module.exports = class TakeCommand extends Command {
 			if(!this.thing.containsThing(this.moveThing.id)) {
 				if (this.actor.isPlayer()) {
 					this.gameEngine.writeLine(this.thing.id+' doesn\'t contain '+this.moveThingId)
+				}
+				return this.stop()
+			}
+		} else {
+			// If from a location
+			// Thing must be in the same location as the actor
+			if(this.moveThing.location.id != this.actor.location.id) {
+				if (this.actor.isPlayer()) {
+					this.gameEngine.writeLine('You can\'t see '+this.moveThingId)
 				}
 				return this.stop()
 			}

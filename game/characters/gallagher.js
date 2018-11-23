@@ -54,7 +54,7 @@ module.exports = function(gameEngine){
 
 	l.addAfter('pat', function(command) {
 		if(!command.actor.isPlayer()) return command.stop()
-		this.narrative('rubs his head up against your leg and starts purring like a motorbike')
+		this.narrative('rubs his head up against your legs and starts purring like a motorbike')
 		if(this.containsThing('key')) {
 			this.doCommand('drop key')
 		}
