@@ -49,16 +49,9 @@ module.exports = class TakeCommand extends Command {
 			return this.stop()
 		}
 
-		// moveThing must not be fixed
-		if(!this.fromContainer && this.moveThing.isImmovable()) {
-			if (this.actor.isPlayer()) {
-				this.gameEngine.writeLine('You can\'t take '+this.moveThingId)
-			}
-			return this.stop()
-		}
-
 		if(this.fromContainer) {
 			// If from a container...
+
 			// Source must actually be a container
 			if(!(this.thing instanceof Container)) {
 				if (this.actor.isPlayer()) {
@@ -83,6 +76,15 @@ module.exports = class TakeCommand extends Command {
 			}
 		} else {
 			// If from a location
+
+			// moveThing must not be fixed
+			if(this.moveThing.isImmovable()) {
+				if (this.actor.isPlayer()) {
+					this.gameEngine.writeLine('You can\'t take '+this.moveThingId)
+				}
+				return this.stop()
+			}
+
 			// Thing must be in the same location as the actor
 			if(this.moveThing.location.id != this.actor.location.id) {
 				if (this.actor.isPlayer()) {
