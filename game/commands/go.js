@@ -24,7 +24,7 @@ module.exports = class GoCommand extends Command {
 		this.actor.setLocation(this.location)
 
 		if(!this.actor.isPlayer()) {
-			if(this.actor.location.id==this.gameEngine.player.location.id) this.actor.narrative('arrives')
+			if(this.actor.isInPlayerLocation()) this.actor.narrative('arrives')
 		} else {
 			this.actor.narrative('go '+this.direction)
 			this.actor.doCommand('look')

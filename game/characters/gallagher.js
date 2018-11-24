@@ -10,7 +10,7 @@ module.exports = class Gallagher extends Character {
 
 	init() {
 		setInterval(function(){
-			if (this.gameEngine.player.location == this.location) {
+			if (this.isInPlayerLocation()) {
 				switch(this.gameEngine.getRandomInt(10)) {
 				case 0:
 					return this.say('bbrrrt!') 

@@ -10,17 +10,17 @@ module.exports = class Ghost extends Character {
 
 	init() {
 		setInterval(function(){
-			switch(1) {
+			switch(this.gameEngine.getRandomInt(10)) {
 			case 0:
 				this.wander()
 				break
 			case 1:
-				if (this.gameEngine.player.location.id == this.location.id) {
+				if (this.isInPlayerLocation()) {
 					return this.narrative('is trying to talk to you. His lips move, but you can\'t hear what he\'s saying.') 
 				}
 				break
 			case 2:
-				if (this.gameEngine.player.location.id == this.location.id) {
+				if (this.isInPlayerLocation()) {
 					return this.narrative('puts his head in his hands. He appears to be sobbing, but there\'s no sound.') 
 				}
 				break

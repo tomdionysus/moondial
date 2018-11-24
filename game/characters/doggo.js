@@ -15,14 +15,14 @@ module.exports = class Doggo extends Character {
 
 		setInterval(function(){
 			if(this.isOld) {
-				if (this.gameEngine.player.location.id == this.location.id) {
+				if (this.isInPlayerLocation()) {
 					switch(this.gameEngine.getRandomInt(10)) {
 					case 0:
 						return this.say('...whine...') 
 					}
 				}
 			} else {
-				if (this.gameEngine.player.location.id == this.location.id) {
+				if (this.isInPlayerLocation()) {
 					switch(this.gameEngine.getRandomInt(10)) {
 					case 0:
 						return this.say('woof!') 
@@ -38,7 +38,7 @@ module.exports = class Doggo extends Character {
 		this.allowAction('pat')
 		this.allowAction('give')
 
-		// Doggo likes dates and gets time
+		// Doggo only wants the calendar
 		this.addBefore('give', function(command) {
 			if(command.giftThingId!='calendar') {
 				this.narrative('doesn\'t want '+command.giftThingId)
@@ -47,11 +47,12 @@ module.exports = class Doggo extends Character {
 			return
 		})
 
+		// The calendar gives doggo time and makes him young again
 		this.addAfter('give', function(command) {
 			if(command.giftThingId!='calendar') return
 			this.narrative('licks dates off the calendar')
 			this.gameEngine.writeLine('A miraculous transformation occurs. Doggo seems to get younger before your eyes, his eyes become brighter, his fur darker, and he suddenly looks a lot happier.')
-			this.setDescription('Doggo is a young beagle with shiny fur and flappy ears. He\'s still a bit artfully scruffy, though.')
+			this.setDescription('Doggo is a young beagle with shiny fur and floppy ears. He\'s still a bit artfully scruffy, though.')
 			this.isOld = false
 			return command.stop()
 		})
