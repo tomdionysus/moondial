@@ -13,5 +13,6 @@ module.exports = class Lawns extends Location {
 		this.addCharacter('doggo')
 		
 		this.addDirection('north','courtyard')
+		this.addDirection('south','maze')
 	}
 }
