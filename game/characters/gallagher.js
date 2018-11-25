@@ -28,7 +28,7 @@ module.exports = class Gallagher extends Character {
 		this.addThing('key')
 
 		// Gallagher only wants the fish.
-		this.addBefore('give', function(command) {
+		this.beforeAction('give', function(command) {
 			if(command.giftThingId!='fish') {
 				this.narrative('doesn\'t want '+command.giftThingId)
 				return command.stop()
@@ -37,14 +37,14 @@ module.exports = class Gallagher extends Character {
 		})
 
 		// Gallagher loves fish.
-		this.addAfter('give', function(command) {
+		this.afterAction('give', function(command) {
 			if(command.giftThingId!='fish') return
 			this.narrative('is really loving his fish')
 			this.say('...purrr!')
 			this.setDescription('Gallagher is a large, friendly ginger cat. He\'s a bit shy. He\'s carrying a small fish and looking very pleased with himself.')
 		})
 
-		this.addBefore('pat', function(command) {
+		this.beforeAction('pat', function(command) {
 			if(!command.actor.isPlayer()) return command.stop()
 			// Gallagher will let you pat him if he has the fish
 			if(this.containsThing('fish')) return
@@ -55,7 +55,7 @@ module.exports = class Gallagher extends Character {
 			return 
 		})
 
-		this.addAfter('pat', function(command) {
+		this.afterAction('pat', function(command) {
 			if(!command.actor.isPlayer()) return command.stop()
 			this.narrative('rubs his head up against your legs and starts purring like a motorbike')
 			if(this.containsThing('key')) {

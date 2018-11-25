@@ -10,6 +10,6 @@ module.exports = class Key extends Thing {
 
 	init() {
 		this.hide()
-		this.addAfter('*', function(){ this.show() })
+		this.afterAction('*', function(){ this.show() })
 	}
 }

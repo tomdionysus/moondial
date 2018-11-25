@@ -39,7 +39,7 @@ module.exports = class Doggo extends Character {
 		this.allowAction('give')
 
 		// Doggo only wants the calendar
-		this.addBefore('give', function(command) {
+		this.beforeAction('give', function(command) {
 			if(command.giftThingId!='calendar') {
 				this.narrative('doesn\'t want '+command.giftThingId)
 				return command.stop()
@@ -48,7 +48,7 @@ module.exports = class Doggo extends Character {
 		})
 
 		// The calendar gives doggo time and makes him young again
-		this.addAfter('give', function(command) {
+		this.afterAction('give', function(command) {
 			if(command.giftThingId!='calendar') return
 			this.narrative('licks dates off the calendar')
 			this.gameEngine.writeLine('A miraculous transformation occurs. Doggo seems to get younger before your eyes, his eyes become brighter, his fur darker, and he suddenly looks a lot happier.')
@@ -57,7 +57,7 @@ module.exports = class Doggo extends Character {
 			return command.stop()
 		})
 
-		this.addAfter('pat', function(command) {
+		this.afterAction('pat', function(command) {
 			if(!command.actor.isPlayer()) return command.stop()
 			if(this.isOld) {
 				this.narrative('sighs')

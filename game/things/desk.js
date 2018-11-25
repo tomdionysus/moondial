@@ -22,8 +22,8 @@ module.exports = class Desk extends ContainerFixture {
 			}
 		}
 
-		this.addBefore('search', locked)
-		this.addBefore('take', locked)
-		this.addBefore('put', locked)
+		this.beforeAction('search', locked)
+		this.beforeAction('take', locked)
+		this.beforeAction('put', locked)
 	}
 }
