@@ -37,6 +37,7 @@ module.exports = class Doggo extends Character {
 
 		this.allowAction('pat')
 		this.allowAction('give')
+		this.allowAction('feed')
 
 		// Doggo only wants the calendar
 		this.beforeAction('give', function(command) {
@@ -64,6 +65,17 @@ module.exports = class Doggo extends Character {
 			} else {
 				this.narrative('wags tail and gambols around you')
 				return this.say('yip!') 
+			}
+			return command.stop()
+		})
+
+		this.afterAction('feed', function(command) {
+			if(!command.actor.isPlayer()) return command.stop()
+			if(this.isOld) {
+				this.narrative('easts slowly, whining sadly')
+			} else {
+				this.narrative('destroys his food like a big dog')
+				return this.say('snarfl!!!') 
 			}
 			return command.stop()
 		})

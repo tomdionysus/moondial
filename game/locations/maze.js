@@ -10,5 +10,7 @@ module.exports = class Maze extends Location {
 
 	init() {
 		this.addDirection('north','lawns')
+
+		this.addCharacter('danjite')
 	}
 }
