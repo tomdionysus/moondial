@@ -2,18 +2,17 @@ const CommandRegistry = require('../../lib/CommandRegistry')
 const Command = require('../../lib/Command')
 
 module.exports = class HelpCommand extends Command {
-	constructor(gameEngine, actor, command) {
+	constructor(gameEngine, actor, query) {
 		super('help',gameEngine,actor)
-		this.command = command
+		this.query = query
 	}
 
 	check() {
-		if(!this.actor.isPlayer()) return this.stop()
 	}
 
 	execute() {
-		if(this.command) {
-			var x = CommandRegistry.get(this.command)
+		if(this.query) {
+			var x = CommandRegistry.get(this.query)
 			if(!x) {
 				this.gameEngine.writeLine('help: no such command '+x)
 				return

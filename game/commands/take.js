@@ -97,6 +97,9 @@ module.exports = class TakeCommand extends Command {
 	}
 
 	execute() {
+		if(this.moveThing.beforeTake) { this.moveThing.beforeTake(this) }
+		if(this.actor.beforeTake) { this.actor.beforeTake(this) }
+		if(this.isStopped()) return
 
 		// Move the thing
 		this.moveThing.location.removeThing(this.moveThing.id)
@@ -109,6 +112,9 @@ module.exports = class TakeCommand extends Command {
 		} else {
 			this.actor.narrative('takes '+this.moveThing.id+fromStr)
 		} 
+
+		if(this.actor.afterTake) { this.actor.afterTake(this) }
+		if(this.moveThing.afterTake) { this.moveThing.afterTake(this) }
 	}
 
 	static help(gameEngine, actor) {

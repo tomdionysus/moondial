@@ -10,6 +10,7 @@ module.exports = class Bedroom extends Location {
 
 	init() {
 		this.addThing('desk')
+		this.addThing('skeleton')
 		this.addCharacter('ghost')
 		
 		this.addDirection('down','mansion')

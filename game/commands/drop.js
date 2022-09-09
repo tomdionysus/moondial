@@ -16,6 +16,10 @@ module.exports = class DropCommand extends Command {
 	}
 
 	execute() {
+		if(this.thing.beforeDrop) { this.thing.beforeDrop(this) }
+		if(this.actor.beforeDrop) { this.actor.beforeDrop(this) }
+		if(this.isStopped()) return
+
 		// Move the thing
 		if(this.thing.location) this.thing.location.removeThing(this.thing.id)
 		this.actor.location.addThing(this.thing.id)
@@ -26,6 +30,9 @@ module.exports = class DropCommand extends Command {
 		} else {
 			this.actor.narrative('drops '+this.thing.id)
 		}
+
+		if(this.actor.afterDrop) { this.actor.afterDrop(this) }
+		if(this.thing.afterDrop) { this.thing.afterDrop(this) }
 	}
 
 	static help(gameEngine, actor) {

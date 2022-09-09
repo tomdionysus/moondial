@@ -2,7 +2,7 @@ const Command = require('../../lib/Command')
 
 module.exports = class InventoryCommand extends Command {
 	constructor(gameEngine, actor) {
-		super('inventory',gameEngine,actor)
+		super('inventory', gameEngine, actor)
 		this.thing = actor
 	}
 

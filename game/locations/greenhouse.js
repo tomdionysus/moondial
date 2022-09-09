@@ -10,5 +10,7 @@ module.exports = class Greenhouse extends Location {
 
 	init() {
 		this.addDirection('west','mansion')
+
+		this.addThing('spade')
 	}
 }
