@@ -14,10 +14,8 @@ module.exports = class TeleportCommand extends Command {
 	}
 
 	execute() {
-		var oldLocation = this.actor.location
-
 		if(!this.actor.isPlayer()) {
-			if(oldLocation.id==this.gameEngine.player.location.id) this.actor.narrative('disappears')
+			if(this.actor.location.id==this.gameEngine.player.location.id) this.actor.narrative('disappears')
 		}
 
 		this.actor.setLocation(this.location.id)

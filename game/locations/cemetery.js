@@ -20,7 +20,7 @@ module.exports = class Cemetery extends Location {
 	}
 
 	afterDig() {
-		this.gameEngine.writeLine('You dig a grave. This is spooky')
+		this.gameEngine.writeLine('You dig a grave. This is spooky.')
 		this.addThing('grave')
 	}
 }

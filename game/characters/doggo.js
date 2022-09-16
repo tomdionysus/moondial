@@ -3,7 +3,7 @@ const Character = require('../../lib/Character')
 module.exports = class Doggo extends Character {
 	constructor(options) {
 		options.id = 'doggo'
-		options.description = 'Doggo is and old scruffy beagle. He looks a bit morose.'
+		options.description = 'Doggo is an old scruffy beagle. He looks a bit morose, and very hungry.'
 		
 		super(options)
 

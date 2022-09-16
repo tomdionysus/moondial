@@ -24,6 +24,7 @@ module.exports = class Gallagher extends Character {
 
 		this.allowAction('pat')
 		this.allowAction('give')
+		this.allowAction('drop')
 
 		this.addThing('key')
 

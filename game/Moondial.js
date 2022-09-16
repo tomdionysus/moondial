@@ -36,8 +36,12 @@ class Moondial extends GameEngine {
 			'give',
 			'search',
 			'put',
+			'feed',
 
-			'teleport',
+			'save',
+			'load',
+
+			'teleport', // Only for testing, remove
 		])
 	}
 }

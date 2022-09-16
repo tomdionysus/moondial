@@ -11,7 +11,7 @@ module.exports = class Skeleton extends Container {
 	init() {
 		this.addThing('humerus')
 
-		this.afterAction('take', function(cmd) {
+		this.afterAction('take', (cmd) => {
 			if(cmd.moveThingId=='humerus') {
 				if(cmd.actor.isPlayer()) {
 					cmd.gameEngine.writeLine('That\'s not funny at all.')
